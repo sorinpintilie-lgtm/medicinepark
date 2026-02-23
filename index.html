@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Park | Centru de Recuperare Medicală București</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#1A2E5B',
+                            blueHover: '#122040', 
+                            red: '#E11A2B',       
+                            bg: '#FFFFFF',        
+                            surface: '#FFFFFF',
+                            textMuted: '#4B5563', 
+                            cardBg: '#E8F3F9',    
+                            textDark: '#111827',  
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base styles */
+        body { background-color: #FFFFFF; color: #111827; scroll-behavior: smooth; overflow-x: hidden; }
+        
+        /* Promo Bar Variables & Body Offset */
+        :root {
+            --promo-height: 40px;
+            --promo-safe-top: env(safe-area-inset-top, 0px);
+            --promo-total: calc(var(--promo-height) + var(--promo-safe-top));
+        }
+        body { 
+            padding-top: var(--promo-total); 
+        }
+
+        /* Promo Bar Styles */
+        .promo-bar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;
+            background-color: #FDE047; color: #422006; height: var(--promo-height);
+            padding-top: var(--promo-safe-top); box-sizing: content-box; font-size: 13.5px; font-weight: 500;
+        }
+        .promo-container { height: 100%; max-width: 1240px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; }
+        .promo-desktop { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 15px; }
+        .promo-text { white-space: nowrap; }
+        .promo-text a { color: #854d0e; font-weight: 600; transition: color 0.2s; text-decoration: none;}
+        .promo-text a:hover { color: #a16207; }
+        .promo-btn {
+            background-color: #ca8a04; color: white; padding: 5px 14px; text-decoration: none;
+            border-radius: 20px; font-size: 13px; font-weight: 600; transition: all 0.3s;
+        }
+        .promo-btn:hover { background-color: #a16207; transform: scale(1.05); }
+
+        /* Promo Bar Mobile Styles */
+        .promo-mobile { display: none; width: 100%; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+        .promo-mobile .truncate { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .promo-mobile .no-wrap { white-space: nowrap; flex-shrink: 0; }
+        .promo-mobile a { color: #854d0e; font-weight: 600; flex-shrink: 0; text-decoration: none;}
+
+        @media (max-width: 768px) {
+            .promo-desktop { display: none; }
+            .promo-mobile { display: flex; }
+        }
+
+        /* Hide scrollbar for sliders */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Keep: stops mobile sideways page scroll */
+        html, body{
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+        @supports (overflow-x: clip){
+          html, body{ overflow-x: clip; }
+        }
+
+        /* Sliders: keep them horizontally scrollable on mobile */
+        #avantaje-slider,
+        #tarife-slider{
+          overscroll-behavior-x: contain;     /* prevents page from rubber-banding sideways */
+          -webkit-overflow-scrolling: touch;
+          touch-action: pan-x;                /* ✅ allow horizontal swipe on the slider */
+          scroll-snap-type: x mandatory;
+        }
+    </style>
+</head>
+<body class="antialiased font-sans">
+
+    <div class="promo-bar">
+        <div class="promo-container">
+            <div class="promo-desktop">
+                <span class="promo-text">
+                    Concept demo • Conținut orientativ • Dezvoltat de sky.ro •
+                    <a href="mailto:dan.trifan@sky.ro">dan.trifan@sky.ro</a> •
+                    <a href="tel:+40720088880">+4 0720 088 880</a>
+                </span>
+                <a href="https://wa.me/40720088880" target="_blank" rel="noopener noreferrer" class="promo-btn">WhatsApp</a>
+            </div>
+            <div class="promo-mobile">
+                <div class="truncate">Concept demo</div>
+                <div class="no-wrap">Dezvoltat de sky.ro</div>
+                <a href="tel:+40720088880">+4 0720 088 880</a>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/40720088880" target="_blank" rel="noopener noreferrer" aria-label="Chat pe WhatsApp" style="position: fixed; bottom: 24px; right: 24px; z-index: 50; display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; background-color: #25D366; color: white; border-radius: 9999px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); transition: all 0.3s;" onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 32px; height: 32px;">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+
+    <header class="sticky z-40 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-300 relative w-full" style="top: var(--promo-total);" data-aos="fade-down" data-aos-duration="800">
+        <nav class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+            <a href="#" class="flex items-center">
+                <img src="logo.webp" alt="Medicine Park" class="h-10 md:h-12 w-auto">
+            </a>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-semibold text-brand-textMuted">
+                <a href="#avantaje" class="hover:text-brand-blue transition-colors">De ce noi?</a>
+                <a href="#servicii" class="hover:text-brand-blue transition-colors">Servicii</a>
+                <a href="#afectiuni" class="hover:text-brand-blue transition-colors">Afecțiuni</a>
+                <a href="#tarife" class="hover:text-brand-blue transition-colors">Tarife</a>
+            </div>
+            
+            <a href="#contact" class="hidden md:inline-block border border-gray-300 text-brand-textDark px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-50 transition-colors shadow-sm">
+                Programează o consultație
+            </a>
+
+            <div class="md:hidden cursor-pointer p-2" id="mobile-menu-btn">
+                <svg class="w-7 h-7 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl pb-6 px-6 pt-2 z-30">
+            <div class="flex flex-col space-y-4 text-center text-brand-textMuted font-semibold text-base">
+                <a href="#avantaje" class="mobile-link py-2 hover:text-brand-blue transition-colors">De ce noi?</a>
+                <a href="#servicii" class="mobile-link py-2 hover:text-brand-blue transition-colors">Servicii</a>
+                <a href="#afectiuni" class="mobile-link py-2 hover:text-brand-blue transition-colors">Afecțiuni</a>
+                <a href="#tarife" class="mobile-link py-2 hover:text-brand-blue transition-colors">Tarife</a>
+                <a href="#contact" class="mobile-link bg-brand-blue text-white px-6 py-3 rounded-full text-sm font-bold shadow-sm mt-2">Programează o consultație</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 md:px-6 mb-8 md:mb-20 md:mt-4">
+        <header class="relative bg-brand-cardBg rounded-[2rem] md:rounded-[3rem] overflow-hidden pt-5 px-5 pb-4 md:p-16 flex flex-col justify-between min-h-[380px] md:min-h-[600px] shadow-sm" data-aos="zoom-in-up" data-aos-duration="1000">
+            <div class="absolute bottom-0 right-[-25%] sm:right-[-5%] md:translate-x-0 md:left-auto md:right-0 w-[95%] sm:w-[60%] md:w-[50%] lg:w-[45%] h-[92%] md:h-[90%] flex justify-end items-end z-10 pointer-events-none group">
+                <img src="hero.png" alt="Tuncay Ozturk" class="w-full h-full object-contain object-bottom md:object-right-bottom drop-shadow-2xl transition-transform duration-1000 group-hover:scale-105 origin-bottom" data-aos="fade-up" data-aos-delay="300">
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 h-[50%] bg-gradient-to-t from-[#E8F3F9] via-[#E8F3F9]/90 to-transparent z-15 pointer-events-none block md:hidden"></div>
+
+            <div class="relative z-20 flex flex-col justify-between h-full w-full md:w-1/2 flex-grow" data-aos="fade-right" data-aos-delay="100">
+                <div>
+                    <div class="flex items-center gap-3 mb-3 md:mb-12">
+                        <div class="flex -space-x-2.5">
+                            <div class="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-brand-cardBg bg-gray-300 overflow-hidden"><img src="https://i.pravatar.cc/100?img=68" alt="Patient" class="w-full h-full object-cover"></div>
+                            <div class="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-brand-cardBg bg-gray-400 overflow-hidden"><img src="https://i.pravatar.cc/100?img=35" alt="Patient" class="w-full h-full object-cover"></div>
+                            <div class="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-brand-cardBg bg-gray-500 overflow-hidden"><img src="https://i.pravatar.cc/100?img=33" alt="Patient" class="w-full h-full object-cover"></div>
+                        </div>
+                        <div>
+                            <div class="font-extrabold text-gray-900 text-[14px] md:text-[15px] leading-tight">15 000+</div>
+                            <div class="text-[12px] md:text-[13px] text-gray-600 font-medium">Pacienți recuperați</div>
+                        </div>
+                    </div>
+
+                        <h1 class="hidden md:block text-[2.5rem] lg:text-[3rem] font-extrabold leading-[1] tracking-tight text-brand-textDark mb-4">
+                            Recuperare <br>
+                            medicală rapidă <br>
+                            și personalizată <br>
+                            în București
+                        </h1>
+
+                        <h1 class="block md:hidden text-[28px] sm:text-[2.75rem] font-extrabold leading-[1.05] tracking-tight text-brand-textDark mb-2">
+                            RECUPERARE<br>
+                            OSTEOPATIE<br>
+                            KINETOTERAPIE<br>
+                            FIZIOTERAPIE
+                        </h1>
+                </div>
+
+                <div class="mt-auto pt-4 md:pt-12 flex flex-col gap-3 relative z-30">
+                    <p class="hidden md:block text-lg text-brand-textMuted max-w-md leading-relaxed">
+                        Tratamente all-inclusive, expertiză internațională și rezultate dovedite sub îndrumarea lui Tuncay Ozturk. Fără taxe ascunse, doar recuperare.
+                    </p>
+
+                    <p class="block md:hidden text-[12px] text-brand-textDark/80 max-w-[250px] leading-snug relative z-30 font-medium">
+                        Tratamente all-inclusive, expertiză internațională și rezultate dovedite sub îndrumarea lui Tuncay Ozturk. Fără taxe ascunse, doar recuperare.
+                    </p>
+
+                    <div class="grid grid-cols-2 sm:flex sm:flex-row gap-2 md:gap-4">
+                        <a href="#tarife" class="bg-brand-blue text-white w-full md:w-auto px-1 md:px-6 py-2.5 rounded-full text-center text-[12.5px] md:text-base font-bold shadow-sm hover:bg-brand-blueHover hover:-translate-y-1 transition-all duration-300">
+                            Vezi pachetele
+                        </a>
+                        <a href="tel:0727464464" class="bg-white/50 backdrop-blur-sm border-2 border-brand-blue text-brand-blue w-full md:w-auto px-1 md:px-6 py-2.5 rounded-full text-center text-[12.5px] md:text-base font-bold hover:bg-brand-blue/10 hover:-translate-y-1 transition-all duration-300">
+                            Sună acum
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex justify-between items-end w-full pb-2 md:pb-0 mt-8">
+                    <div>
+                        <div class="text-[3rem] font-light text-brand-textDark leading-[0.8] mb-2">
+                            4.9<span class="text-[1.5rem] text-gray-500 font-normal">/5</span>
+                        </div>
+                        <div class="text-[13px] text-brand-textMuted font-medium mb-1.5">Google Reviews</div>
+                        <div class="flex text-yellow-400 text-sm gap-0.5">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                    </div>
+                    <div class="text-right font-extrabold text-brand-textDark leading-tight text-[15px] max-w-[130px] md:max-w-none">
+                        Cel mai bun<br class="md:hidden"> centru de<br class="md:hidden"> recuperare
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <section id="avantaje" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-blue">Mai eficient. Cu mai puțin.</h2>
+            <p class="text-brand-textMuted text-lg">Filozofia noastră este simplă: vă oferim tot ce aveți nevoie într-o singură ședință, fără să plătiți în plus pentru fiecare procedură.</p>
+        </div>
+        
+        <div id="avantaje-slider" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 md:grid md:grid-cols-3 md:gap-8 py-4 md:py-0">
+            
+            <div class="w-full max-w-full flex-shrink-0 snap-center bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-red group-hover:text-white transition-colors duration-300">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-brand-blue group-hover:text-brand-red transition-colors">Sesiuni all-Inclusive</h3>
+                <p class="text-brand-textMuted text-sm leading-relaxed whitespace-normal">Dacă specialistul recomandă 4 proceduri diferite (ex: fizio, kineto, dry needling, drenaj), le primiți pe toate în aceeași ședință, fără costuri suplimentare.</p>
+            </div>
+
+            <div class="w-full max-w-full flex-shrink-0 snap-center bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 group" data-aos="fade-up" data-aos-delay="250">
+                <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-red group-hover:text-white transition-colors duration-300">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-brand-blue group-hover:text-brand-red transition-colors">Recuperare rapidă</h3>
+                <p class="text-brand-textMuted text-sm leading-relaxed whitespace-normal">Ne mândrim cu mii de pacienți complet recuperați în doar 7-8 ședințe datorită abordării noastre multidisciplinare și tehnologiei de ultimă generație.</p>
+            </div>
+
+            <div class="w-full max-w-full flex-shrink-0 snap-center bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-500 group" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-red group-hover:text-white transition-colors duration-300">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-brand-blue group-hover:text-brand-red transition-colors">Experiență internațională</h3>
+                <p class="text-brand-textMuted text-sm leading-relaxed whitespace-normal">Tehnici inovatoare de tratament, aplicate cu succes atât pe atleți olimpici, cât și pe pacienți de zi cu zi, adaptate pentru un parcurs fără durere.</p>
+            </div>
+        </div>
+
+        <div id="avantaje-dots" class="flex md:hidden justify-center gap-2 mt-4">
+            <div class="w-6 h-2 rounded-full bg-brand-blue transition-all duration-300"></div>
+            <div class="w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"></div>
+            <div class="w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"></div>
+        </div>
+    </section>
+
+    <section id="servicii" class="bg-[#F8FAFC] py-24 border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-brand-blue">Servicii medicale integrate pentru rezultate maxime.</h2>
+                    <p class="text-brand-textMuted mb-8 text-lg">Acoperim o paletă largă de terapii, pe care le combinăm strategic pentru a trata nu doar simptomul, ci cauza problemei tale.</p>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-4 text-brand-blue font-semibold"><div class="w-2 h-2 rounded-full bg-brand-red"></div> Kinetoterapie & gimnastică medicală</li>
+                        <li class="flex items-center gap-4 text-brand-blue font-semibold"><div class="w-2 h-2 rounded-full bg-brand-red"></div> Fizioterapie avansată</li>
+                        <li class="flex items-center gap-4 text-brand-blue font-semibold"><div class="w-2 h-2 rounded-full bg-brand-red"></div> Osteopatie & terapie manuală</li>
+                        <li class="flex items-center gap-4 text-brand-blue font-semibold"><div class="w-2 h-2 rounded-full bg-brand-red"></div> Dry needling (Ace uscate)</li>
+                        <li class="flex items-center gap-4 text-brand-blue font-semibold"><div class="w-2 h-2 rounded-full bg-brand-red"></div> Chiropractică & medicină sportivă</li>
+                    </ul>
+                </div>
+                
+                <div id="afectiuni" class="bg-white p-8 md:p-12 rounded-[2rem] border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-500" data-aos="zoom-in-left" data-aos-delay="200">
+                    <h3 class="text-2xl font-bold mb-6 text-brand-blue">Afecțiuni tratate frecvent</h3>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-4 text-sm text-brand-textMuted font-medium">
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Hernie de disc</p>
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Dureri de spate</p>
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Spondiloză cervicală</p>
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Recuperare proteze</p>
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Gonartroză / Coxartroză</p>
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Rupturi de ligamente</p>
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Sciatică</p>
+                        <p class="hover:text-brand-red transition-colors cursor-default">✓ Accidentări sportive</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tarife" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-blue">Pachete de tratament</h2>
+            <p class="text-brand-textMuted text-lg">Fără taxe ascunse. Fără dată de expirare. Toate pachetele includ o <strong>consultație gratuită</strong> inițială.</p>
+        </div>
+
+        <div id="tarife-slider" class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-6 md:grid md:grid-cols-2 md:gap-8 max-w-4xl mx-auto pt-8 pb-6 md:pt-8 md:pb-0">
+            
+            <div class="w-full max-w-full flex-shrink-0 snap-center bg-white p-8 md:p-10 rounded-[2rem] shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500 flex flex-col group" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-2xl font-bold text-brand-blue text-center mb-2">Pachet 10 ședințe</h3>
+                <div class="text-center my-6 group-hover:scale-105 transition-transform duration-500">
+                    <span class="text-5xl font-extrabold text-brand-blue">150<span class="text-3xl"> RON</span></span>
+                    <span class="text-brand-textMuted font-medium block mt-2">per ședință</span>
+                    <p class="text-sm mt-3 font-semibold text-brand-textMuted bg-gray-50 py-2 rounded-lg inline-block px-4">Total: 1.500 RON</p>
+                </div>
+                <ul class="space-y-4 mb-10 text-brand-textMuted text-sm font-medium flex-grow">
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> OSTEOPATIE</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> FIZIOTERAPIE</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> TERAPIE MANUALA</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> DRY NEEDLING</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> CHIROPRACTICA</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> DRENAJ LIMFATIC</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> ELECTROSTIMULARE</li>
+                    
+                </ul>
+                <a href="#contact" class="w-full bg-white text-brand-blue border-2 border-brand-blue py-4 rounded-full text-center font-bold hover:bg-brand-blue hover:text-white transition-colors">
+                    Alege pachetul
+                </a>
+            </div>
+
+            <div class="w-full max-w-full flex-shrink-0 snap-center bg-brand-blue p-8 md:p-10 rounded-[2rem] shadow-none md:shadow-2xl relative flex flex-col md:-translate-y-4 hover:-translate-y-6 transition-all duration-500 group" data-aos="fade-up" data-aos-delay="300">
+                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-brand-red text-white px-6 py-1.5 rounded-full text-sm font-bold uppercase tracking-wide shadow-md whitespace-nowrap z-10">
+                    Cel mai avantajos
+                </div>
+                <h3 class="text-2xl font-bold text-white text-center mb-2 mt-2">Pachet 15 ședințe</h3>
+                <div class="text-center my-6 group-hover:scale-105 transition-transform duration-500">
+                    <span class="text-5xl font-extrabold text-white">135<span class="text-3xl"> RON</span></span>
+                    <span class="text-blue-200 font-medium block mt-2">per ședință</span>
+                    <p class="text-sm mt-3 font-semibold text-brand-blue bg-white py-2 rounded-lg inline-block px-4">Total: 2.025 RON</p>
+                </div>
+                <ul class="space-y-4 mb-10 text-blue-100 text-sm font-medium flex-grow">
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> OSTEOPATIE</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> FIZIOTERAPIE</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> TERAPIE MANUALA</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> DRY NEEDLING</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> CHIROPRACTICA</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> DRENAJ LIMFATIC</li>
+                    <li class="flex items-start gap-3"><svg class="w-5 h-5 text-brand-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> ELECTROSTIMULARE</li>
+                </ul>
+                <a href="#contact" class="w-full bg-brand-red text-white py-4 rounded-full text-center font-bold hover:bg-brand-redHover transition-colors shadow-lg relative z-10">
+                    Alege pachetul
+                </a>
+            </div>
+        </div>
+
+        <div id="tarife-dots" class="flex md:hidden justify-center gap-2 mt-4">
+            <div class="w-6 h-2 rounded-full bg-brand-blue transition-all duration-300"></div>
+            <div class="w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"></div>
+        </div>
+        <p class="text-center mt-8 text-sm text-brand-textMuted" data-aos="fade-in" data-aos-delay="500">*Prețul unei singure ședințe individuale, în afara pachetului, este de 250 RON.</p>
+    </section>
+
+    <section class="bg-brand-blue py-24 text-white overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 text-center" data-aos="zoom-in-up" data-aos-duration="1000">
+            <svg class="w-12 h-12 mx-auto text-brand-red mb-8 opacity-80" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            
+            <div id="review-container" class="transition-opacity duration-500 ease-in-out opacity-100 min-h-[300px] md:min-h-[220px] flex flex-col justify-center items-center">
+                
+                <h3 id="review-text" class="text-xl md:text-3xl font-medium leading-relaxed mb-6 text-white italic">
+                    "În contextul practicării unui sport de performanță, recuperarea medicală devine un factor cheie, mai ales atunci când există tendința de antrenament frecvent și intens. Tuncay a avut grijă să aducă echilibrul dintre antrenament și recuperare, reușind să reducă durerile care mă împiedicau să îmi continui activitatea."
+                </h3>
+                
+                <div class="flex justify-center text-yellow-400 mb-5 gap-1">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                </div>
+
+                <div id="review-author" class="font-bold text-lg tracking-wide uppercase text-brand-red">Lucian Sânmărtean</div>
+                <div id="review-role" class="text-sm text-blue-200 mt-1 uppercase">Fotbalist</div>
+            </div>
+
+            <div id="review-dots" class="flex justify-center gap-2 mt-8">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="max-w-7xl mx-auto px-6 py-24">
+        <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-blue">Programează o consultație</h2>
+            <p class="text-brand-textMuted text-lg">Completează formularul de mai jos și echipa noastră te va contacta în cel mai scurt timp pentru a stabili o programare.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="bg-brand-blue p-8 md:p-10 rounded-[2rem] shadow-sm border border-gray-100" data-aos="fade-right">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-white mb-2">Nume complet *</label>
+                            <input type="text" id="name" name="name" required 
+                                class="w-full px-4 py-3 rounded-xl border border-blue-300 focus:border-white focus:ring-2 focus:ring-white/20 outline-none transition-all duration-300 text-brand-textDark bg-white"
+                                placeholder="Introduceți numele dumneavoastră">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-white mb-2">Email *</label>
+                            <input type="email" id="email" name="email" required 
+                                class="w-full px-4 py-3 rounded-xl border border-blue-300 focus:border-white focus:ring-2 focus:ring-white/20 outline-none transition-all duration-300 text-brand-textDark bg-white"
+                                placeholder="email@exemplu.ro">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-semibold text-white mb-2">Telefon *</label>
+                            <input type="tel" id="phone" name="phone" required 
+                                class="w-full px-4 py-3 rounded-xl border border-blue-300 focus:border-white focus:ring-2 focus:ring-white/20 outline-none transition-all duration-300 text-brand-textDark bg-white"
+                                placeholder="07XX XXX XXX">
+                        </div>
+                        <div>
+                            <label for="service" class="block text-sm font-semibold text-white mb-2">Serviciul dorit</label>
+                            <select id="service" name="service" 
+                                class="w-full px-4 py-3 rounded-xl border border-blue-300 focus:border-white focus:ring-2 focus:ring-white/20 outline-none transition-all duration-300 text-brand-textDark bg-white">
+                                <option value="">Selectați un serviciu</option>
+                                <option value="kinetoterapie">Kinetoterapie & Gimnastică medicală</option>
+                                <option value="fizioterapie">Fizioterapie avansată</option>
+                                <option value="osteopatie">Osteopatie & Terapie manuală</option>
+                                <option value="dry-needling">Dry needling (Ace uscate)</option>
+                                <option value="chiropractica">Chiropractică & Medicină sportivă</option>
+                                <option value="consultatie">Consultație generală</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-semibold text-white mb-2">Mesaj</label>
+                            <textarea id="message" name="message" rows="4" 
+                                class="w-full px-4 py-3 rounded-xl border border-blue-300 focus:border-white focus:ring-2 focus:ring-white/20 outline-none transition-all duration-300 text-brand-textDark bg-white resize-none"
+                                placeholder="Descrieți pe scurt problema dumneavoastră..."></textarea>
+                        </div>
+                        <button type="submit" 
+                            class="w-full bg-brand-red text-white py-4 rounded-full font-bold hover:bg-brand-redHover hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            Trimite cererea
+                        </button>
+                    </form>
+                    <div id="form-success" class="hidden text-center py-8">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Cerere trimisă cu succes!</h3>
+                        <p class="text-blue-100">Vă vom contacta în cel mai scurt timp.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-center space-y-8" data-aos="fade-left">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-blue mb-1">Telefon</h4>
+                            <a href="tel:0727464464" class="text-brand-textMuted hover:text-brand-red transition-colors text-lg font-medium">0727 464 464</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-blue mb-1">Email</h4>
+                            <a href="mailto:office@medicinepark.ro" class="text-brand-textMuted hover:text-brand-red transition-colors">office@medicinepark.ro</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-blue mb-1">Adresă</h4>
+                            <p class="text-brand-textMuted">Str. Grigore Mora, nr. 19</p>
+                            <p class="text-brand-textMuted">Sector 1, București</p>
+                            <p class="text-xs text-brand-textMuted italic mt-1">(Zona Aviatorilor, lângă TVR)</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-blue mb-1">Program</h4>
+                            <p class="text-brand-textMuted"><strong>Luni - Vineri:</strong> 08:00 – 20:00</p>
+                            <p class="text-brand-textMuted"><strong>Sâmbătă:</strong> 09:00 – 14:00</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2706.649860929429!2d26.087357299999997!3d44.4630216!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b2020deb3d9a33%3A0xc2c3748519ba8bbf!2sMedicine%20Park!5e1!3m2!1sro!2sro!4v1771858458385!5m2!1sro!2sro" width="100%" height="200" style="border:0; border-radius: 1rem;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#F8FAFC] border-t border-gray-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-12 text-sm text-brand-textMuted">
+            <div class="md:col-span-1" data-aos="fade-up" data-aos-delay="100">
+                <img src="logo.webp" alt="Medicine Park" class="h-12 w-auto mb-4">
+                <p class="mb-4">Centru de excelență în recuperare medicală, kinetoterapie și fizioterapie din București.</p>
+            </div>
+            
+            <div data-aos="fade-up" data-aos-delay="200">
+                <h4 class="font-bold text-brand-blue uppercase tracking-wider mb-4">Contact</h4>
+                <p class="mb-2 font-medium text-brand-blue text-lg hover:text-brand-red transition-colors cursor-pointer">0727 464 464</p>
+                <p class="hover:text-brand-red transition-colors cursor-pointer">office@medicinepark.ro</p>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="300">
+                <h4 class="font-bold text-brand-blue uppercase tracking-wider mb-4">Locație</h4>
+                <p>Str. Grigore Mora, nr. 19</p>
+                <p>Sector 1, București</p>
+                <p class="mt-2 text-xs italic">(Zona Aviatorilor, lângă TVR)</p>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="400">
+                <h4 class="font-bold text-brand-blue uppercase tracking-wider mb-4">Program</h4>
+                <p class="mb-1"><strong>Luni - Vineri:</strong> 08:00 – 20:00</p>
+                <p class="mb-1"><strong>Sâmbătă:</strong> 09:00 – 14:00</p>
+                <p class="text-brand-red font-medium mt-4">Nu lucrăm cu CNAS / CASMB.</p>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 border-t border-gray-200 pt-8 md:flex md:justify-between md:items-center text-xs text-brand-textMuted">
+            <div class="flex flex-col gap-3">
+                <p>© 2026 Medicine Park. Toate drepturile rezervate.</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-400">Crafted in the clouds by</span>
+                    <a href="https://sky.ro" target="_blank" rel="noopener noreferrer" class="hover:opacity-80 transition-opacity">
+                        <img src="skyro.png" alt="Sky.ro" class="h-6 w-auto">
+                    </a>
+                </div>
+            </div>
+            <div class="flex space-x-6 font-medium mt-4 md:mt-0">
+                <a href="#" class="hover:text-brand-red transition-colors">Politică de Confidențialitate</a>
+                <a href="#" class="hover:text-brand-red transition-colors">Termeni și Condiții</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,         
+            offset: 60,         
+            duration: 800,      
+            easing: 'ease-out-cubic',
+        });
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        // Toggle menu on click
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Mobile Slider Dot Logic
+        function initSliderDots(sliderId, dotsContainerId) {
+            const slider = document.getElementById(sliderId);
+            const dotsContainer = document.getElementById(dotsContainerId);
+            if (!slider || !dotsContainer) return;
+            
+            const dots = dotsContainer.children;
+            
+            slider.addEventListener('scroll', () => {
+                // Calculate which card is currently centered
+                const scrollPercentage = slider.scrollLeft / (slider.scrollWidth - slider.clientWidth);
+                const currentIndex = Math.round(scrollPercentage * (dots.length - 1));
+                
+                // Update dots styling
+                Array.from(dots).forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.className = "w-6 h-2 rounded-full bg-brand-blue transition-all duration-300";
+                    } else {
+                        dot.className = "w-2 h-2 rounded-full bg-gray-300 transition-all duration-300";
+                    }
+                });
+            });
+        }
+
+        initSliderDots('avantaje-slider', 'avantaje-dots');
+        initSliderDots('tarife-slider', 'tarife-dots');
+
+        // Contact Form Logic
+        const contactForm = document.getElementById('contact-form');
+        const formSuccess = document.getElementById('form-success');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Show success message
+                contactForm.classList.add('hidden');
+                formSuccess.classList.remove('hidden');
+                
+                // Reset form after 5 seconds
+                setTimeout(() => {
+                    formSuccess.classList.add('hidden');
+                    contactForm.classList.remove('hidden');
+                    contactForm.reset();
+                }, 5000);
+            });
+        }
+
+        // Auto-Rotating Reviews Logic
+        const reviews = [
+            {
+                text: "În contextul practicării unui sport de performanță, recuperarea medicală devine un factor cheie, mai ales atunci când există tendința de antrenament frecvent și intens. Tuncay a avut grijă să aducă echilibrul dintre antrenament și recuperare, reușind să reducă durerile care mă împiedicau să îmi continui activitatea.",
+                author: "Lucian Sânmărtean",
+                role: "Fotbalist"
+            },
+            {
+                text: "Îl cunosc pe Tuncay din 2013, este un profesionist, îi doresc mult succes și să continue cu aceeași pasiune!",
+                author: "Marian Drăgulescu",
+                role: "Gimnast Olimpic"
+            },
+            {
+                text: "Sunt la Tuncay Ozturk. Spondiloza mea cervicală, care mi-a dat bătaie de cap atâta timp, e pe cale să ia sfârșit. Dumnezeu să îi dea sănătate omului ăstuia! E un specialist extraordinar.",
+                author: "Connect-R",
+                role: "Artist"
+            },
+            {
+                text: "Mai mult decât bun. Recomand tuturor celor în suferință să se adreseze cu încredere lui Tuncay pentru că este un profesionist de prima mână. Nu numai asta, dar și atmosfera este una în care te simți bine. Atât eu, cât și soția mea, ne-am simțit mult mai bine după aceea.",
+                author: "Victor Rebengiuc",
+                role: "Actor"
+            },
+            {
+                text: "Mai mult decât bun. Recomand tuturor celor în suferință să se adreseze cu încredere lui Tuncay pentru că este un profesionist de prima mână. Nu numai asta, dar și atmosfera este una în care te simți bine. Atât eu, cât și soțul meu, ne-am simțit mult mai bine după aceea.",
+                author: "Mariana Mihuț",
+                role: "Actriță"
+            }
+        ];
+
+        let currentReviewIndex = 0;
+        const reviewContainer = document.getElementById('review-container');
+        const reviewText = document.getElementById('review-text');
+        const reviewAuthor = document.getElementById('review-author');
+        const reviewRole = document.getElementById('review-role');
+        const reviewDotsContainer = document.getElementById('review-dots');
+
+        // Create Navigation Dots dynamically
+        reviews.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `w-2 h-2 rounded-full cursor-pointer transition-all duration-500 ${index === 0 ? 'bg-brand-red w-8' : 'bg-blue-300/50 hover:bg-blue-300'}`;
+            dot.onclick = () => changeReview(index);
+            reviewDotsContainer.appendChild(dot);
+        });
+
+        const reviewDots = reviewDotsContainer.children;
+        let reviewInterval;
+
+        function changeReview(index) {
+            // 1. Fade out smoothly
+            reviewContainer.classList.remove('opacity-100');
+            reviewContainer.classList.add('opacity-0');
+            
+            // 2. Wait 500ms for CSS transition to finish, then swap text
+            setTimeout(() => {
+                currentReviewIndex = index;
+                
+                reviewText.textContent = `"${reviews[currentReviewIndex].text}"`;
+                reviewAuthor.textContent = reviews[currentReviewIndex].author;
+                reviewRole.textContent = reviews[currentReviewIndex].role;
+                
+                // Update dots styling
+                Array.from(reviewDots).forEach((dot, i) => {
+                    dot.className = `w-2 h-2 rounded-full cursor-pointer transition-all duration-500 ${i === currentReviewIndex ? 'bg-brand-red w-8' : 'bg-blue-300/50 hover:bg-blue-300'}`;
+                });
+                
+                // 3. Fade back in
+                reviewContainer.classList.remove('opacity-0');
+                reviewContainer.classList.add('opacity-100');
+            }, 500); 
+
+            // Reset the interval so clicking a dot doesn't immediately jump to the next one
+            clearInterval(reviewInterval);
+            startReviewInterval();
+        }
+
+        function startReviewInterval() {
+            // Change review automatically every 6 seconds
+            reviewInterval = setInterval(() => {
+                let nextIndex = (currentReviewIndex + 1) % reviews.length;
+                changeReview(nextIndex);
+            }, 6000);
+        }
+
+        startReviewInterval();
+    </script>
+</body>
+</html>
